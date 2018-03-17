@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:58:47 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/15 21:25:27 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 11:35:11 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	parse_vn(FILE *file, t_tmp_obj *t)
 void	parse_mtl(FILE *file, t_tmp_obj *t)
 {
 	char mtlpath[1024];
+
 	fscanf(file, "%s \n", mtlpath);
 	printf("	%s\n", mtlpath);
 	t->mtl = new_mtl(mtlpath, t);

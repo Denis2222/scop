@@ -313,6 +313,16 @@ FILE		*open_file_from_folder(const char *folder, char *path);
 
 int			load_bmp(const char * imagepath);
 
+void		centerobj(t_obj *obj);
+void		obj_init(t_obj *obj_data, t_tmp_obj *t);
+void		obj_init_color(t_obj *obj_data);
+t_obj		*secure_malloc_obj(void);
+
+void		add_mesh(t_obj *obj, const char *path);
+t_obj		*get_mesh(const char *path);
+
+void		light_controls(t_app *app);
+
 static int oldState;
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:58:47 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 10:51:41 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 11:34:57 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scop.h>
 #include <ctype.h>
 
-int checkobj(FILE *file)
+int		checkobj(FILE *file)
 {
 	char	header[100];
 	int		read;
@@ -21,9 +21,9 @@ int checkobj(FILE *file)
 
 	read = fread(header, 1, 50, file);
 	i = 0;
-	while(i < read)
+	while (i < read)
 	{
-		if(!isascii(header[i]))
+		if (!isascii(header[i]))
 		{
 			printf("Caractere cheulou dans .obj ... \n");
 			return (0);
@@ -63,7 +63,8 @@ int		tmp_obj_loading(t_tmp_obj *t)
 	if (strcmp(t->lineHeader, "mtllib") == 0)
 	{
 		parse_mtl(t->file, t);
-	} else if (strcmp(t->lineHeader, "v") == 0)
+	}
+	else if (strcmp(t->lineHeader, "v") == 0)
 	{
 		parse_v(t->file, t);
 	}
@@ -82,7 +83,7 @@ int		tmp_obj_loading(t_tmp_obj *t)
 	return (1);
 }
 
-void 	tmp_obj_free_low(t_tmp_obj *t)
+void	tmp_obj_free_low(t_tmp_obj *t)
 {
 	list_del(&t->temp_vertex);
 	list_del(&t->temp_uv);
@@ -96,7 +97,7 @@ void 	tmp_obj_free_low(t_tmp_obj *t)
 	free(t->path);
 }
 
-void 	tmp_obj_free(t_tmp_obj *t)
+void	tmp_obj_free(t_tmp_obj *t)
 {
 	t_list *l;
 

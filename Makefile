@@ -20,7 +20,8 @@ GLMC = ./glmc/libglmc.a
 LIBFT = ./libft/libft.a
 
 SRC = shader.c \
-	   controls.c \
+	   Control/controls.c \
+	   Control/control_light.c \
 	   Model/model.c \
 	   Model/model_bind.c \
 	   Model/model_bind_buffer.c \
@@ -30,9 +31,13 @@ SRC = shader.c \
 	   Model/model_free.c \
 	   glfw.c \
 	   Object/obj.c \
+	   Object/obj_center.c \
+	   Object/obj_init.c \
 	   Object/parsing.c \
 	   Object/tangent.c \
+	   Object/mesh_list.c \
 	   Object/Parsing/face.c \
+	   Object/Parsing/face_346.c \
 	   Object/Parsing/tmp_obj.c \
 	   t_list.c \
 	   Material/mtl.c \
