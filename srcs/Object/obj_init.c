@@ -44,13 +44,13 @@ void	obj_init_color(t_obj *obj_data)
 
 void	obj_init(t_obj *obj_data, t_tmp_obj *t)
 {
-	obj_data->nvertices = list_length(t->vertexIndices);
+	obj_data->nvertices = list_length(t->vertex_indices);
 	obj_data->vertices = (float*)malloc(sizeof(float) * 3 *
 		obj_data->nvertices);
-	obj_data->nuvs = list_length(t->uvIndices);
+	obj_data->nuvs = list_length(t->uv_indices);
 	if (obj_data->nuvs > 0)
 		obj_data->uvs = (float*)malloc(sizeof(float) * 2 * obj_data->nuvs);
-	obj_data->nnormals = list_length(t->normalIndices);
+	obj_data->nnormals = list_length(t->normal_indices);
 	if (obj_data->nnormals > 0)
 		obj_data->normals =
 			(float*)malloc(sizeof(float) * 3 * obj_data->nnormals);

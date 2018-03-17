@@ -14,41 +14,41 @@
 
 void	parse_face_3_4(FILE *file, t_tmp_obj *t)
 {
-	fseek(file, t->readHead, SEEK_SET);
+	fseek(file, t->read_head, SEEK_SET);
 	t->matches = fscanf(file, "%d %d %d %d\n",
-		&t->vertexIndex[0],
-		&t->vertexIndex[1],
-		&t->vertexIndex[2],
-		&t->vertexIndex[3]);
+		&t->vertex_index[0],
+		&t->vertex_index[1],
+		&t->vertex_index[2],
+		&t->vertex_index[3]);
 	if (t->matches == 3)
 	{
 		t->facefound = 1;
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[1], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[1], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
 	}
 	if (t->matches == 4)
 	{
 		t->facefound = 1;
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[1], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
-		list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[3], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[1], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
+		list_push(&t->vertex_indices, list_new_uint(t->vertex_index[3], 1));
 	}
 }
 
 void	parse_face_6(t_tmp_obj *t)
 {
 	t->facefound = 1;
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[1], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[1], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
 	if (t->temp_uv)
 	{
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[0], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[1], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[2], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[0], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[1], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[2], 1));
 	}
 }

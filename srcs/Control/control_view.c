@@ -19,23 +19,23 @@ void	controls_direction(t_app *app)
 	double	ypos;
 
 	glfwGetCursorPos(app->window, &xpos, &ypos);
-	delta_time = (glfwGetTime() - app->input->lastTime);
+	delta_time = (glfwGetTime() - app->input->last_time);
 	light_controls(app);
-	app->input->lastTime = glfwGetTime();
+	app->input->last_time = glfwGetTime();
 	glfwSetCursorPos(app->window, WIDTH / 2, HEIGHT / 2);
-	app->input->horizontalAngle += app->input->mouseSpeed * delta_time *
+	app->input->horizontal_angle += app->input->mouse_speed * delta_time *
 	(float)(WIDTH / 2 - xpos);
-	app->input->verticalAngle += app->input->mouseSpeed * delta_time *
+	app->input->vertical_angle += app->input->mouse_speed * delta_time *
 	(float)(HEIGHT / 2 - ypos);
-	vec3fedit(app->input->dir, cos(app->input->verticalAngle) *
-	sin(app->input->horizontalAngle), sin(app->input->verticalAngle),
-	cos(app->input->verticalAngle) * cos(app->input->horizontalAngle));
-	vec3fedit(app->input->right, sin(app->input->horizontalAngle - 3.14f /
-	2.0f), 0, cos(app->input->horizontalAngle - 3.14f / 2.0f));
-	vec3fedit(app->input->deltaDir, app->input->dir->x * delta_time *
+	vec3fedit(app->input->dir, cos(app->input->vertical_angle) *
+	sin(app->input->horizontal_angle), sin(app->input->vertical_angle),
+	cos(app->input->vertical_angle) * cos(app->input->horizontal_angle));
+	vec3fedit(app->input->right, sin(app->input->horizontal_angle - 3.14f /
+	2.0f), 0, cos(app->input->horizontal_angle - 3.14f / 2.0f));
+	vec3fedit(app->input->delta_dir, app->input->dir->x * delta_time *
 	app->input->speed, app->input->dir->y * delta_time * app->input->speed,
 	app->input->dir->z * delta_time * app->input->speed);
-	vec3fedit(app->input->deltaRight, app->input->right->x * delta_time *
+	vec3fedit(app->input->delta_right, app->input->right->x * delta_time *
 	app->input->speed, app->input->right->y * delta_time * app->input->speed,
 	app->input->right->z * delta_time * app->input->speed);
 }

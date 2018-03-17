@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 08:58:47 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 09:18:04 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 17:31:07 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,15 @@ t_mtl	*mtl_init(void)
 
 	mtl = (t_mtl*)malloc(sizeof(t_mtl));
 	mtl->name = NULL;
-	mtl->Ns = 0.0f;
-	mtl->Ka = NULL;
-	mtl->Kd = NULL;
-	mtl->Ks = NULL;
-	mtl->Ke = NULL;
-	mtl->Ni = 0.0f;
-	mtl->d = 0.0f;
-	mtl->illum = 0;
-	mtl->map_Kd_path = NULL;
-	mtl->map_Ks_path = NULL;
-	mtl->map_Bump_path = NULL;
-	mtl->map_Kd_buffer = NULL;
-	mtl->map_Ks_buffer = NULL;
-	mtl->map_Bump_buffer = NULL;
-	mtl->map_Kd = 0;
-	mtl->map_Ks = 0;
-	mtl->map_Bump = 0;
+	mtl->map_kd_path = NULL;
+	mtl->map_ks_path = NULL;
+	mtl->map_bump_path = NULL;
+	mtl->map_kd_buffer = NULL;
+	mtl->map_ks_buffer = NULL;
+	mtl->map_bump_buffer = NULL;
+	mtl->map_kd = 0;
+	mtl->map_ks = 0;
+	mtl->map_bump = 0;
 	return (mtl);
 }
 
@@ -73,17 +65,17 @@ int		read_mtl_by_line(FILE *file, t_mtl *mtl)
 	else if (strcmp(line_read, "map_Kd") == 0)
 	{
 		fscanf(file, "%s\n", line_read);
-		mtl->map_Kd_path = strdup(line_read);
+		mtl->map_kd_path = strdup(line_read);
 	}
 	else if (strcmp(line_read, "map_Ks") == 0)
 	{
 		fscanf(file, "%s\n", line_read);
-		mtl->map_Ks_path = strdup(line_read);
+		mtl->map_ks_path = strdup(line_read);
 	}
 	else if (strcmp(line_read, "map_Bump") == 0)
 	{
 		fscanf(file, "%s\n", line_read);
-		mtl->map_Bump_path = strdup(line_read);
+		mtl->map_bump_path = strdup(line_read);
 	}
 	else
 		fgets(line_read, 1024, file);
@@ -104,11 +96,11 @@ t_mtl	*new_mtl(char *path, t_tmp_obj *t)
 	while (read_mtl_by_line(file, mtl))
 		;
 	fclose(file);
-	if (mtl->map_Kd_path)
-		mtl->map_Kd_path = load_texture(mtl->map_Kd_path, t);
-	if (mtl->map_Bump_path)
-		mtl->map_Bump_path = load_texture(mtl->map_Bump_path, t);
-	if (mtl->map_Ks_path)
-		mtl->map_Ks_path = load_texture(mtl->map_Ks_path, t);
+	if (mtl->map_kd_path)
+		mtl->map_kd_path = load_texture(mtl->map_kd_path, t);
+	if (mtl->map_bump_path)
+		mtl->map_bump_path = load_texture(mtl->map_bump_path, t);
+	if (mtl->map_ks_path)
+		mtl->map_ks_path = load_texture(mtl->map_ks_path, t);
 	return (mtl);
 }

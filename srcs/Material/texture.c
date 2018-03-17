@@ -28,7 +28,7 @@ void		add_texture(char *path, unsigned char *data, int width, int height)
 	t->data = data;
 	t->width = width;
 	t->height = height;
-	t->textureID = 0;
+	t->texture_id = 0;
 	t->loaded = 0;
 	app = root();
 	list_push(&app->textures, list_new(t, sizeof(t_texture*)));

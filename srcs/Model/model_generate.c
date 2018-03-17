@@ -25,7 +25,7 @@ void	model_generate_uniform_model_rotation(t_model *model)
 	rotatez = mat4f_rotate_z(mat4f_identity(1.0f), model->rotation->z);
 	identity = mat4f_multiply(rotatex, rotatey);
 	rotate = mat4f_multiply(identity, rotatez);
-	glUniformMatrix4fv(model->ModelRotateID, 1, GL_FALSE, &rotate->m[0][0]);
+	glUniformMatrix4fv(model->model_rotate_id, 1, GL_FALSE, &rotate->m[0][0]);
 	free(rotate);
 	free(identity);
 	free(rotatex);
@@ -40,9 +40,9 @@ void	model_generate_uniform_model(t_model *model)
 
 	translate = mat4f_translate(model->position);
 	scale = mat4f_scale(model->scale->x, model->scale->y, model->scale->z);
-	glUniformMatrix4fv(model->ModelTranslateID, 1,
+	glUniformMatrix4fv(model->model_translate_id, 1,
 		GL_FALSE, &translate->m[0][0]);
-	glUniformMatrix4fv(model->ModelScaleID, 1, GL_FALSE, &scale->m[0][0]);
+	glUniformMatrix4fv(model->model_scale_id, 1, GL_FALSE, &scale->m[0][0]);
 	model_generate_uniform_model_rotation(model);
 	free(translate);
 	free(scale);
@@ -52,9 +52,9 @@ void	model_generate_uniform_projection(t_app *app, t_model *model)
 {
 	t_mat4f *projection;
 
-	projection = mat4f_perspective(app->input->initialFoV,
+	projection = mat4f_perspective(app->input->initial_fov,
 		16.0f / 9.0f, 0.1f, 1000.0f);
-	glUniformMatrix4fv(model->MatrixProjectionID, 1,
+	glUniformMatrix4fv(model->matrix_projection_id, 1,
 		GL_FALSE, &projection->m[0][0]);
 	free(projection);
 }
@@ -74,7 +74,7 @@ void	model_generate_uniform_view(t_app *app, t_model *model)
 		app->input->pos,
 		target,
 		upvector);
-	glUniformMatrix4fv(model->MatrixViewID, 1, GL_FALSE, &view->m[0][0]);
+	glUniformMatrix4fv(model->matrix_view_id, 1, GL_FALSE, &view->m[0][0]);
 	free(target);
 	free(upvector);
 	free(view);

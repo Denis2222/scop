@@ -15,21 +15,21 @@
 void	model_bind_buffer_all(t_model *model)
 {
 	model_bind_buffer(&model->vertexbuffer,
-		sizeof(float) * 3 * model->objData->nvertices, (float*)model->vertex);
+		sizeof(float) * 3 * model->obj_data->nvertices, (float*)model->vertex);
 	model_bind_buffer(&model->colorbuffer,
-		sizeof(float) * 3 * model->objData->nvertices, (float*)model->color);
-	if (model->enableUV)
+		sizeof(float) * 3 * model->obj_data->nvertices, (float*)model->color);
+	if (model->enable_uv)
 		model_bind_buffer(&model->uvbuffer,
-			sizeof(float) * 2 * model->objData->nuvs, (float*)model->uv);
-	if (model->enableNormal)
+			sizeof(float) * 2 * model->obj_data->nuvs, (float*)model->uv);
+	if (model->enable_normal)
 		model_bind_buffer(&model->normalbuffer, sizeof(float) * 3 *
-		model->objData->nnormals, (float*)model->normal);
-	if (model->enableUV)
+		model->obj_data->nnormals, (float*)model->normal);
+	if (model->enable_uv)
 	{
 		model_bind_buffer(&model->tangentbuffer, sizeof(float) * 3 *
-		model->objData->nvertices, (float*)model->tangent);
+		model->obj_data->nvertices, (float*)model->tangent);
 		model_bind_buffer(&model->bitangentbuffer, sizeof(float) * 3 *
-		model->objData->nvertices, (float*)model->bitangent);
+		model->obj_data->nvertices, (float*)model->bitangent);
 	}
 }
 

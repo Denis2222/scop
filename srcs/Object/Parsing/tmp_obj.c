@@ -38,9 +38,9 @@ int		tmp_obj_init(t_tmp_obj *t, const char *path)
 	t->temp_vertex = NULL;
 	t->temp_uv = NULL;
 	t->temp_normal = NULL;
-	t->vertexIndices = NULL;
-	t->uvIndices = NULL;
-	t->normalIndices = NULL;
+	t->vertex_indices = NULL;
+	t->uv_indices = NULL;
+	t->normal_indices = NULL;
 	t->mtl = NULL;
 	t->n = 0;
 	t->file = fopen(path, "r");
@@ -57,29 +57,29 @@ int		tmp_obj_init(t_tmp_obj *t, const char *path)
 
 int		tmp_obj_loading(t_tmp_obj *t)
 {
-	t->res = fscanf(t->file, "%s", t->lineHeader);
+	t->res = fscanf(t->file, "%s", t->line_header);
 	if (t->res == EOF)
 		return (0);
-	if (strcmp(t->lineHeader, "mtllib") == 0)
+	if (strcmp(t->line_header, "mtllib") == 0)
 	{
 		parse_mtl(t->file, t);
 	}
-	else if (strcmp(t->lineHeader, "v") == 0)
+	else if (strcmp(t->line_header, "v") == 0)
 	{
 		parse_v(t->file, t);
 	}
-	else if (strcmp(t->lineHeader, "vt") == 0)
+	else if (strcmp(t->line_header, "vt") == 0)
 	{
 		parse_vt(t->file, t);
 	}
-	else if (strcmp(t->lineHeader, "vn") == 0)
+	else if (strcmp(t->line_header, "vn") == 0)
 	{
 		parse_vn(t->file, t);
 	}
-	else if (strcmp(t->lineHeader, "f") == 0)
+	else if (strcmp(t->line_header, "f") == 0)
 		parse_face(t->file, t);
 	else
-		fgets(t->stupidBuffer, 1000, t->file);
+		fgets(t->stupid_buffer, 1000, t->file);
 	return (1);
 }
 
@@ -88,12 +88,12 @@ void	tmp_obj_free_low(t_tmp_obj *t)
 	list_del(&t->temp_vertex);
 	list_del(&t->temp_uv);
 	list_del(&t->temp_normal);
-	list_del(&t->vI);
-	list_del(&t->uI);
-	list_del(&t->nI);
-	list_del(&t->vertexIndices);
-	list_del(&t->uvIndices);
-	list_del(&t->normalIndices);
+	list_del(&t->vi);
+	list_del(&t->ui);
+	list_del(&t->ni);
+	list_del(&t->vertex_indices);
+	list_del(&t->uv_indices);
+	list_del(&t->normal_indices);
 	free(t->path);
 }
 

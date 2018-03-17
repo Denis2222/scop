@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:20:49 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 11:29:29 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 17:08:53 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int		model_load(t_model *model)
 void	model_render_send(t_app *app, t_model *model)
 {
 	model_send_mvp(app, model);
-	model_send_texture(0, model->DiffuseTexture, model->DiffuseTextureID);
-	model_send_texture(1, model->SpecularTexture, model->SpecularTextureID);
-	model_send_texture(2, model->NormalTexture, model->NormalTextureID);
-	glUniform1f(model->RatioColorTextureID, app->input->RatioColorTexture);
-	glUniform3f(model->LightID, app->input->lightPos->x,
-		app->input->lightPos->y, app->input->lightPos->z);
+	model_send_texture(0, model->diffuse_texture, model->diffuse_texture_id);
+	model_send_texture(1, model->specular_texture, model->specular_texture_id);
+	model_send_texture(2, model->normal_texture, model->normal_texture_id);
+	glUniform1f(model->ratio_colortexture_id, app->input->ratio_color_texture);
+	glUniform3f(model->light_id, app->input->light_pos->x,
+		app->input->light_pos->y, app->input->light_pos->z);
 }
 
 int		model_render(t_app *app, t_model *model)
@@ -68,20 +68,20 @@ int		model_render(t_app *app, t_model *model)
 	if (!(model->loaded && model->enable))
 		return (0);
 	model_control(app, model);
-	glUseProgram(model->programID);
+	glUseProgram(model->program_id);
 	model_render_send(app, model);
 	model_send_buffer(vertex_attrib++, &model->vertexbuffer, 3);
 	model_send_buffer(vertex_attrib++, &model->colorbuffer, 3);
-	if (model->enableUV)
+	if (model->enable_uv)
 		model_send_buffer(vertex_attrib++, &model->uvbuffer, 2);
-	if (model->enableNormal)
+	if (model->enable_normal)
 		model_send_buffer(vertex_attrib++, &model->normalbuffer, 3);
-	if (model->enableUV)
+	if (model->enable_uv)
 	{
 		model_send_buffer(vertex_attrib++, &model->tangentbuffer, 3);
 		model_send_buffer(vertex_attrib++, &model->bitangentbuffer, 3);
 	}
-	glDrawArrays(app->input->renderMode, 0, model->nvertices);
+	glDrawArrays(app->input->render_mode, 0, model->nvertices);
 	while (attr < vertex_attrib)
 		glDisableVertexAttribArray(attr++);
 	return (1);

@@ -72,7 +72,7 @@ void	model_control(t_app *app, t_model *model)
 {
 	if (strcmp(model->obj_filename, "./assets/light/lantern.obj") == 0)
 	{
-		vec3f_cpy(model->position, app->input->lightPos);
+		vec3f_cpy(model->position, app->input->light_pos);
 		vec3f_move(model->position, 1.f, 1.f, 1.f);
 		return ;
 	}
@@ -81,6 +81,6 @@ void	model_control(t_app *app, t_model *model)
 	model_control_rotate(app, model);
 	model_control_translate(app, model);
 	model_control_scale(app, model);
-	if (app->input->autoRotate)
+	if (app->input->auto_rotate)
 		vec3f_move(model->rotation, 0.0f, 0.01f, 0.0f);
 }

@@ -6,12 +6,27 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 15:25:14 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 16:17:40 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 17:17:36 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCOOP_H
-# define SCOOP_H
+#ifndef SCOP_H
+# define SCOP_H
+
+# ifdef __linux__
+#  define GL3_PROTOTYPES 1
+#  include <GL/glew.h>
+#  include <GLFW/glfw3.h>
+#  define OPENGL_VERSION_MAJOR 3
+#  define OPENGL_VERSION_MINOR 3
+# endif
+
+# ifdef __APPLE__
+#  include <GL/glew.h>
+#  include <GLFW/glfw3.h>
+#  define OPENGL_VERSION_MAJOR 4
+#  define OPENGL_VERSION_MINOR 0
+# endif
 
 # include <stdio.h>
 # include <unistd.h>
@@ -20,18 +35,6 @@
 # include <string.h>
 # include <libgen.h>
 # include <pthread.h>
-# ifdef __linux__
-#  define GL3_PROTOTYPES 1
-#  include <GL/glew.h>
-#  include <GLFW/glfw3.h>
-#  define OPENGL_VERSION_MAJOR 3
-#  define OPENGL_VERSION_MINOR 3
-# else
-#  include <GL/glew.h>
-#  include <GLFW/glfw3.h>
-#  define OPENGL_VERSION_MAJOR 4
-#  define OPENGL_VERSION_MINOR 0
-# endif
 # include <glmc.h>
 # include <libft.h>
 # define WIDTH 2000
@@ -81,7 +84,7 @@ typedef struct		s_texture
 	unsigned char	*data;
 	size_t			width;
 	size_t			height;
-	GLuint			textureID;
+	GLuint			texture_id;
 }					t_texture;
 
 typedef struct		s_shader
@@ -94,26 +97,26 @@ typedef struct		s_shader
 typedef struct		s_mtl
 {
 	char			*name;
-	float			Ns;
-	t_vec3f			*Ka;
-	t_vec3f			*Kd;
-	t_vec3f			*Ks;
-	t_vec3f			*Ke;
-	float			Ni;
+	float			ns;
+	t_vec3f			*ka;
+	t_vec3f			*kd;
+	t_vec3f			*ks;
+	t_vec3f			*ke;
+	float			ni;
 	float			d;
 	int				illum;
 
-	char			*map_Kd_path;
-	char			*map_Ks_path;
-	char			*map_Bump_path;
+	char			*map_kd_path;
+	char			*map_ks_path;
+	char			*map_bump_path;
 
-	unsigned char	*map_Kd_buffer;
-	unsigned char	*map_Ks_buffer;
-	unsigned char	*map_Bump_buffer;
+	unsigned char	*map_kd_buffer;
+	unsigned char	*map_ks_buffer;
+	unsigned char	*map_bump_buffer;
 
-	GLuint			map_Kd;
-	GLuint			map_Ks;
-	GLuint			map_Bump;
+	GLuint			map_kd;
+	GLuint			map_ks;
+	GLuint			map_bump;
 
 }					t_mtl;
 
@@ -149,43 +152,43 @@ typedef struct		s_tmp_obj
 	t_list			*temp_uv;
 	t_list			*temp_normal;
 
-	t_list			*vertexIndices;
-	t_list			*uvIndices;
-	t_list			*normalIndices;
+	t_list			*vertex_indices;
+	t_list			*uv_indices;
+	t_list			*normal_indices;
 
 	int				facefound;
-	char			lineHeader[1024];
-	char			stupidBuffer[1000];
+	char			line_header[1024];
+	char			stupid_buffer[1000];
 
 	int				matches;
 
-	unsigned int	vertexIndex[4];
-	unsigned int	uvIndex[4];
-	unsigned int	normalIndex[4];
+	unsigned int	vertex_index[4];
+	unsigned int	uv_index[4];
+	unsigned int	normal_index[4];
 
-	long			readHead;
+	long			read_head;
 
-	int				vertexI;
-	int				uvI;
-	int				normalI;
+	int				vertex_i;
+	int				uv_i;
+	int				normal_i;
 
 	t_mtl			*mtl;
 
 	unsigned int	n;
-	t_list			*vI;
-	t_list			*uI;
-	t_list			*nI;
+	t_list			*vi;
+	t_list			*ui;
+	t_list			*ni;
 }					t_tmp_obj;
 
 typedef struct		s_input
 {
-	float			horizontalAngle;
-	float			verticalAngle;
-	float			initialFoV;
+	float			horizontal_angle;
+	float			vertical_angle;
+	float			initial_fov;
 	float			speed;
-	float			mouseSpeed;
+	float			mouse_speed;
 
-	double			lastTime;
+	double			last_time;
 
 	int				view;
 
@@ -193,24 +196,24 @@ typedef struct		s_input
 	t_vec3f			*dir;
 	t_vec3f			*right;
 
-	t_vec3f			*deltaRight;
-	t_vec3f			*deltaDir;
+	t_vec3f			*delta_right;
+	t_vec3f			*delta_dir;
 
-	t_vec3f			*lightPos;
+	t_vec3f			*light_pos;
 
-	float			RatioColorTexture;
-	int				RatioColorTextureBool;
+	float			ratio_color_texture;
+	int				ratio_color_bool;
 	float			var;
 
-	int				autoRotate;
+	int				auto_rotate;
 	int				skybox;
 
-	GLenum			renderMode;
+	GLenum			render_mode;
 }					t_input;
 
 typedef struct		s_model
 {
-	t_obj			*objData;
+	t_obj			*obj_data;
 	t_mtl			*mtl;
 
 	char			*obj_filename;
@@ -223,35 +226,35 @@ typedef struct		s_model
 	GLuint			tangentbuffer;
 	GLuint			bitangentbuffer;
 
-	GLuint			programID;
+	GLuint			program_id;
 
-	GLuint			DiffuseTexture;
-	GLuint			DiffuseTextureID;
+	GLuint			diffuse_texture;
+	GLuint			diffuse_texture_id;
 
-	GLuint			NormalTexture;
-	GLuint			NormalTextureID;
+	GLuint			normal_texture;
+	GLuint			normal_texture_id;
 
-	GLuint			SpecularTexture;
-	GLuint			SpecularTextureID;
+	GLuint			specular_texture;
+	GLuint			specular_texture_id;
 
-	GLuint			MatrixModelID;
-	GLuint			MatrixViewID;
-	GLuint			MatrixProjectionID;
+	GLuint			matrix_model_id;
+	GLuint			matrix_view_id;
+	GLuint			matrix_projection_id;
 
-	GLuint			LightID;
-	GLuint			RatioColorTextureID;
-	GLuint			CameraPositionID;
+	GLuint			light_id;
+	GLuint			ratio_colortexture_id;
+	GLuint			camera_position_id;
 
-	GLuint			ModelScaleID;
-	GLuint			ModelRotateID;
-	GLuint			ModelTranslateID;
+	GLuint			model_scale_id;
+	GLuint			model_rotate_id;
+	GLuint			model_translate_id;
 
 	t_vec3f			*position;
 	t_vec3f			*rotation;
 	t_vec3f			*scale;
 
-	int				enableUV;
-	int				enableNormal;
+	int				enable_uv;
+	int				enable_normal;
 	int				nvertices;
 
 	t_vec3f			*vertex;
@@ -287,7 +290,7 @@ int					model_load(t_model *model);
 
 int					model_bind(t_model *model);
 void				model_bind_buffer(GLuint *buffer, size_t s, float *data);
-void				model_bind_texture(GLuint *textureID, char *path);
+void				model_bind_texture(GLuint *texture_id, char *path);
 int					model_bind_shader(t_model *model, char *name);
 void				model_bind_buffer_all(t_model *model);
 
@@ -300,8 +303,8 @@ void				model_generate_uniform_view(t_app *app, t_model *model);
 
 void				model_send_buffer(unsigned int attr, GLuint *buffer,
 						size_t size);
-void				model_send_texture(unsigned int i, GLuint Texture,
-						GLuint TextureID);
+void				model_send_texture(unsigned int i, GLuint texture,
+						GLuint texture_id);
 void				model_send_mvp(t_app *app, t_model *model);
 
 void				model_control(t_app *app, t_model *model);

@@ -14,18 +14,18 @@
 
 void	model_free(t_model *model)
 {
-	if (model->objData->nvertices)
+	if (model->obj_data->nvertices)
 	{
-		free(model->objData->vertices);
-		free(model->objData->tangents);
-		free(model->objData->bitangents);
+		free(model->obj_data->vertices);
+		free(model->obj_data->tangents);
+		free(model->obj_data->bitangents);
 	}
-	if (model->objData->nuvs)
-		free(model->objData->uvs);
-	if (model->objData->nnormals)
-		free(model->objData->normals);
+	if (model->obj_data->nuvs)
+		free(model->obj_data->uvs);
+	if (model->obj_data->nnormals)
+		free(model->obj_data->normals);
 	free(model->position);
 	free(model->rotation);
 	free(model->scale);
-	free(model->objData);
+	free(model->obj_data);
 }

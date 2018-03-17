@@ -15,31 +15,31 @@
 void	parse_face_8(t_tmp_obj *t)
 {
 	t->facefound = 1;
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[1], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[3], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[1], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[3], 1));
 	if (t->temp_uv)
 	{
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[0], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[1], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[2], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[0], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[2], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[3], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[0], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[1], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[2], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[0], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[2], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[3], 1));
 	}
 }
 
 void	parse_face_8_6(FILE *file, t_tmp_obj *t)
 {
-	fseek(file, t->readHead, SEEK_SET);
+	fseek(file, t->read_head, SEEK_SET);
 	t->matches = fscanf(file, "%d/%d %d/%d %d/%d %d/%d\n",
-	&t->vertexIndex[0], &t->uvIndex[0],
-	&t->vertexIndex[1], &t->uvIndex[1],
-	&t->vertexIndex[2], &t->uvIndex[2],
-	&t->vertexIndex[3], &t->uvIndex[3]);
+	&t->vertex_index[0], &t->uv_index[0],
+	&t->vertex_index[1], &t->uv_index[1],
+	&t->vertex_index[2], &t->uv_index[2],
+	&t->vertex_index[3], &t->uv_index[3]);
 	if (t->matches == 8)
 	{
 		parse_face_8(t);
@@ -53,61 +53,61 @@ void	parse_face_8_6(FILE *file, t_tmp_obj *t)
 void	parse_face_9(t_tmp_obj *t)
 {
 	t->facefound = 1;
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[1], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[1], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
 	if (t->temp_uv)
 	{
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[0], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[1], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[2], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[0], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[1], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[2], 1));
 	}
 	if (t->temp_normal)
 	{
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[0], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[1], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[2], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[0], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[1], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[2], 1));
 	}
 }
 
 void	parse_face_12(t_tmp_obj *t)
 {
 	t->facefound = 1;
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[1], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[0], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[2], 1));
-	list_push(&t->vertexIndices, list_new_uint(t->vertexIndex[3], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[1], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[0], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[2], 1));
+	list_push(&t->vertex_indices, list_new_uint(t->vertex_index[3], 1));
 	if (t->temp_uv)
 	{
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[0], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[1], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[2], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[0], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[2], 1));
-		list_push(&t->uvIndices, list_new_uint(t->uvIndex[3], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[0], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[1], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[2], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[0], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[2], 1));
+		list_push(&t->uv_indices, list_new_uint(t->uv_index[3], 1));
 	}
 	if (t->temp_normal)
 	{
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[0], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[1], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[2], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[0], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[2], 1));
-		list_push(&t->normalIndices, list_new_uint(t->normalIndex[3], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[0], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[1], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[2], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[0], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[2], 1));
+		list_push(&t->normal_indices, list_new_uint(t->normal_index[3], 1));
 	}
 }
 
 int		parse_face(FILE *file, t_tmp_obj *t)
 {
 	t->facefound = 0;
-	t->readHead = ftell(file);
+	t->read_head = ftell(file);
 	t->matches = fscanf(file, "%d/%d/%d %d/%d/%d %d/%d/%d %d/%d/%d\n",
-	&t->vertexIndex[0], &t->uvIndex[0], &t->normalIndex[0],
-	&t->vertexIndex[1], &t->uvIndex[1], &t->normalIndex[1],
-	&t->vertexIndex[2], &t->uvIndex[2], &t->normalIndex[2],
-	&t->vertexIndex[3], &t->uvIndex[3], &t->normalIndex[3]);
+	&t->vertex_index[0], &t->uv_index[0], &t->normal_index[0],
+	&t->vertex_index[1], &t->uv_index[1], &t->normal_index[1],
+	&t->vertex_index[2], &t->uv_index[2], &t->normal_index[2],
+	&t->vertex_index[3], &t->uv_index[3], &t->normal_index[3]);
 	if (t->matches == 9)
 		parse_face_9(t);
 	else if (t->matches == 12)
