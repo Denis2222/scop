@@ -6,13 +6,11 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 07:30:15 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 07:30:17 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 09:20:49 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <scop.h>
-
-static int oldState;
 
 void 	camera_free(t_input *input)
 {

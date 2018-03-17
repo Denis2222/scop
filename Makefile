@@ -8,7 +8,7 @@ ifeq ($(UNAME), Darwin)
 	DL_FLAG = -L./glmc -L./libft -L $(HOME)/.brew/lib -framework OpenGL -lglfw -lGLEW -lpthread
 endif
 
-GCC_FLAG =  -Wall -Werror -Wextra #-g -fsanitize=address
+GCC_FLAG =  -Wall -Werror -Wextra -g -fsanitize=address
 CC = gcc $(GCC_FLAG) $(DL_INC)
 
 NAME = scop

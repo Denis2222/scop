@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mtl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/17 08:58:47 by dmoureu-          #+#    #+#             */
+/*   Updated: 2018/03/17 09:18:04 by dmoureu-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <scop.h>
 
-t_mtl *mtl_init(void)
+t_mtl	*mtl_init(void)
 {
 	t_mtl *mtl;
 
@@ -26,8 +38,7 @@ t_mtl *mtl_init(void)
 	return (mtl);
 }
 
-
-FILE *open_file_from_folder(const char *folder, char *path)
+FILE	*open_file_from_folder(const char *folder, char *path)
 {
 	char	*dir;
 	char	*filepath;
@@ -36,9 +47,9 @@ FILE *open_file_from_folder(const char *folder, char *path)
 	dir = ft_dirname(folder);
 	filepath = (char *)malloc((strlen(dir) + strlen(path) + 5) * sizeof(char));
 	bzero(filepath, (strlen(dir) + strlen(path) + 5));
-	filepath = strcat(filepath,dir);
-	filepath = strcat(filepath,"/");
-	filepath = strcat(filepath,path);
+	filepath = strcat(filepath, dir);
+	filepath = strcat(filepath, "/");
+	filepath = strcat(filepath, path);
 	file = fopen(filepath, "r");
 	if (file == NULL)
 	{
@@ -51,34 +62,38 @@ FILE *open_file_from_folder(const char *folder, char *path)
 	return (file);
 }
 
-
-int read_mtl_by_line(FILE *file, t_mtl *mtl)
+int		read_mtl_by_line(FILE *file, t_mtl *mtl)
 {
-	char lineRead[1024];
-	int res = fscanf(file, "%s", lineRead);
+	char	line_read[1024];
+	int		res;
+
+	res = fscanf(file, "%s", line_read);
 	if (res == EOF)
 		return (0);
-	if (strcmp(lineRead, "newmtl") == 0) {
-		fscanf(file, "%s\n",lineRead);
-		mtl->name = strdup(lineRead);
-	} else if (strcmp(lineRead, "map_Kd") == 0) {
-		fscanf(file, "%s\n", lineRead);
-		mtl->map_Kd_path = strdup(lineRead);
-	} else if (strcmp(lineRead, "map_Ks") == 0) {
-		fscanf(file, "%s\n", lineRead);
-		mtl->map_Ks_path = strdup(lineRead);
-	} else if (strcmp(lineRead, "map_Bump") == 0) {
-		fscanf(file, "%s\n", lineRead);
-		mtl->map_Bump_path = strdup(lineRead);
-	} else
-		fgets(lineRead, 1024, file);
+	else if (strcmp(line_read, "map_Kd") == 0)
+	{
+		fscanf(file, "%s\n", line_read);
+		mtl->map_Kd_path = strdup(line_read);
+	}
+	else if (strcmp(line_read, "map_Ks") == 0)
+	{
+		fscanf(file, "%s\n", line_read);
+		mtl->map_Ks_path = strdup(line_read);
+	}
+	else if (strcmp(line_read, "map_Bump") == 0)
+	{
+		fscanf(file, "%s\n", line_read);
+		mtl->map_Bump_path = strdup(line_read);
+	}
+	else
+		fgets(line_read, 1024, file);
 	return (1);
 }
 
-t_mtl *new_mtl(char *path, t_tmp_obj *t)
+t_mtl	*new_mtl(char *path, t_tmp_obj *t)
 {
-	t_mtl *mtl;
-	FILE *file;
+	t_mtl	*mtl;
+	FILE	*file;
 
 	if (!(file = open_file_from_folder(t->path, path)))
 	{

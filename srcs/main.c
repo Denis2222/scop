@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
-	loadBMP_custom("./assets/poney.bmp");
+	load_bmp("./assets/poney.bmp");
 	//printf("%d %s\n", argc, argv[1]);
 	if (argc > 1 && argv[1])
 		list_push(&app->models, list_new(model_new_scale(argv[1], 1.f,1.f,1.f), sizeof(t_model*)));
@@ -99,5 +99,5 @@ int main(int argc, char **argv)
 	free(arg);
 	glDeleteVertexArrays(1, &VertexArrayID);
 	glfwTerminate();
-	return 0;
+	return (0);
 }

@@ -24,7 +24,6 @@
 
 # include <glmc.h>
 # include <libft.h>
-# include "bmp.h"
 # include "t_list.h"
 
 # define WIDTH 2000
@@ -308,5 +307,11 @@ int			tmp_obj_loading(t_tmp_obj *t);
 void 		tmp_obj_free(t_tmp_obj *t);
 
 char 		*ft_dirname(const char *filepath);
+
+FILE		*open_file_from_folder(const char *folder, char *path);
+
+int			load_bmp(const char * imagepath);
+
+static int oldState;
 
 #endif
