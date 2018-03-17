@@ -47,7 +47,7 @@ SRCS=$(addprefix $(SRCDIR),$(SRC))
 OBJS = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 all:$(NAME) $(GLMC) $(LIBFT)
-
+	@if [ -a ./assets/AK ]; then echo "Assets OK"; else echo "Download Assets : " ; curl -O http://denis-moureu.fr/42/assets-scop.zip; echo "Unzip to ./assets/" ;unzip assets-scop.zip -d ./assets ; rm -rf ./assets-scop.zip ; fi;
 $(addprefix $(OBJDIR)/, %.o): $(addprefix $(SRCDIR)/, %.c)
 	$(dir_guard)
 	@$(CC)  -o $@ -c $^
@@ -64,6 +64,8 @@ $(LIBFT):
 
 clean:
 	@rm -rf $(OBJDIR)
+	@make -C ./glmc clean
+	@make -C ./libft clean
 
 fclean: clean
 	@rm -f $(NAME)
