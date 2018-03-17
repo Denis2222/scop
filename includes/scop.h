@@ -268,6 +268,7 @@ int 		model_bind(t_model *model);
 void 		model_bind_buffer(GLuint *buffer, size_t s, float *data);
 void 		model_bind_texture(GLuint *textureID, char *path);
 int 		model_bind_shader(t_model *model, char *name);
+void		model_bind_buffer_all(t_model *model);
 
 int 		model_render(t_app *app, t_model *model);
 

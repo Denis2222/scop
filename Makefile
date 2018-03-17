@@ -23,6 +23,7 @@ SRC = shader.c \
 	   controls.c \
 	   Model/model.c \
 	   Model/model_bind.c \
+	   Model/model_bind_buffer.c \
 	   Model/model_generate.c \
 	   Model/model_send.c \
 	   Model/model_control.c \
