@@ -1,175 +1,119 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shader.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/17 14:30:42 by dmoureu-          #+#    #+#             */
+/*   Updated: 2018/03/17 14:40:59 by dmoureu-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <scop.h>
 #include <string.h>
 
-long		getFileSize(FILE* pFile)
+long	get_file_size(FILE *p_file)
 {
-    long length = 0;
+	long length;
 
-    fseek(pFile,0,SEEK_END);
-    length = ftell(pFile);
-    fseek(pFile,0,SEEK_SET);
-    return (length);
+	length = 0;
+	fseek(p_file, 0, SEEK_END);
+	length = ftell(p_file);
+	fseek(p_file, 0, SEEK_SET);
+	return (length);
 }
 
-void		add_shader(const char *path, GLuint program_id)
+char	*load_shader_file(char *path)
 {
-	t_app		*app;
-	t_shader	*shader;
+	FILE	*file;
+	long	size;
+	char	*str;
 
-	shader = (t_shader*)malloc(sizeof(t_shader));
-	shader->path = strdup(path);
-	shader->loaded = 1;
-	shader->program_id = program_id;
-	app = root();
-	list_push(&app->shaders, list_new(shader, sizeof(t_shader*)));
-}
-
-t_shader	*get_shader(const char *path)
-{
-	t_app		*app;
-	t_list		*l;
-	t_shader	*shader;
-
-	app = root();
-	l = app->shaders;
-	while (l)
+	str = NULL;
+	file = fopen(path, "r");
+	if (file == NULL)
 	{
-		shader = l->addr;
-		if (strcmp(path, shader->path) == 0)
-			return (shader);
-		l = l->next;
-	}
-	return (NULL);
-}
-
-GLuint shader_load(const char *name)
-{
-	t_shader	*shader;
-
-	if ((shader = get_shader(name)))
-		return (shader->program_id);
-
-	char vertex_file_path[1024];
-	char fragment_file_path[1024];
-
-	sprintf(vertex_file_path, "./shaders/%s.vert", name);
-	sprintf(fragment_file_path, "./shaders/%s.frag", name);
-
-	// Create the shaders
-	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-	FILE *vertFile;
-	FILE *fragFile;
-
-	long vertFileSize;
-	long fragFileSize;
-
-	GLchar* log = NULL;
-
-	vertFile = fopen(vertex_file_path, "r");
-	if (vertFile == NULL)
-	{
-		printf("Can't read shader file : %s\n", vertex_file_path);
+		printf("Can't read shader file : %s\n", path);
 		return (0);
 	}
-	vertFileSize = getFileSize(vertFile);
-	char *vertFileStr = NULL;
-	vertFileStr = malloc(vertFileSize + 1);
-	bzero(vertFileStr, vertFileSize + 1);
-	if (!vertFileStr)
+	size = get_file_size(file);
+	str = malloc(size + 1);
+	bzero(str, size + 1);
+	if (!str)
 		exit(1);
-	fread(vertFileStr, vertFileSize, 1, vertFile);
-	fclose(vertFile);
-	fragFile = fopen(fragment_file_path, "r");
-	if (fragFile == NULL)
+	fread(str, size, 1, file);
+	fclose(file);
+	return (str);
+}
+
+int		shader_check_error(GLuint shader_id)
+{
+	int		log_length;
+	char	*log;
+
+	glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &log_length);
+	if (log_length > 0)
 	{
-		printf("Can't read shader file : %s\n", fragment_file_path);
+		log = (GLchar*)malloc(log_length);
+		if (log == NULL)
+		{
+			fprintf(stderr,
+				"Malloc log compilation du shader error !\n");
+			return (0);
+		}
+		bzero(log, log_length);
+		glGetShaderInfoLog(shader_id, log_length, &log_length, log);
+		fprintf(stderr, "Erreur de compilation :\n%s", log);
+		free(log);
+	}
+	return (1);
+}
+
+GLuint	shader_compile(const char *name, GLenum type)
+{
+	GLuint		shader_id;
+	char		*data;
+	char		path[1024];
+	char const	*data_ptr;
+
+	if (type == GL_VERTEX_SHADER)
+		sprintf(path, "./shaders/%s.vert", name);
+	if (type == GL_FRAGMENT_SHADER)
+		sprintf(path, "./shaders/%s.frag", name);
+	if (!(data = load_shader_file(path)))
 		return (0);
+	shader_id = glCreateShader(type);
+	data_ptr = data;
+	glShaderSource(shader_id, 1, &data_ptr, NULL);
+	glCompileShader(shader_id);
+	free(data);
+	if (!shader_check_error(shader_id))
+		return (0);
+	return (shader_id);
+}
+
+GLuint	shader_load(const char *name)
+{
+	GLuint fragment_shader_id;
+	GLuint vertex_shader_id;
+	GLuint program_id;
+
+	vertex_shader_id = shader_compile(name, GL_VERTEX_SHADER);
+	fragment_shader_id = shader_compile(name, GL_FRAGMENT_SHADER);
+	if (!vertex_shader_id || !fragment_shader_id)
+	{
+		printf("Corrige les shaders \n Programme termine \n");
 	}
-	fragFileSize = getFileSize(fragFile);
-	char *fragFileStr = NULL;
-	fragFileStr = malloc(fragFileSize + 1);
-	if (!fragFileStr)
-		exit(1);
-	bzero(fragFileStr, fragFileSize + 1);
-	fread(fragFileStr, fragFileSize, 1, fragFile);
-	fclose(fragFile);
-	GLint Result = GL_FALSE;
-	int InfoLogLength;
-	// Compile Vertex Shader
-	printf("Compiling shader : %s\n", vertex_file_path);
-	char const * VertexSourcePointer = vertFileStr;
-	glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
-	glCompileShader(VertexShaderID);
-	// Check Vertex Shader
-	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if ( InfoLogLength > 0 ){
-		printf("InfoLof");
-		log = (GLchar*)malloc(InfoLogLength);
-		if ( log == NULL )
-		{
-			fprintf(stderr,"Erreur d'allocation de mémoire pour le log de la compilation du shader\n");
-			return 0;
-		}
-		bzero(log, InfoLogLength);
-		glGetShaderInfoLog(VertexShaderID, InfoLogLength, &InfoLogLength, log);
-		fprintf(stderr,"Erreur de compilation:\n%s",log);
-		free(log);
-	}
-	printf("Compiling shader : %s\n", fragment_file_path);
-	char const * FragmentSourcePointer = fragFileStr;
-	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer , NULL);
-	glCompileShader(FragmentShaderID);
-	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if ( InfoLogLength > 0 ){
-		log = (GLchar*)malloc(InfoLogLength);
-		if ( log == NULL )
-		{
-			fprintf(stderr,"Erreur d'allocation de mémoire pour le log de la compilation du shader\n");
-			return 0;
-		}
-		bzero(log, InfoLogLength);
-		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, &InfoLogLength, log);
-		fprintf(stderr,"Erreur de compilation:\n%s",log);
-		free(log);
-	}
-	// Link the program
-	printf("Linking program\n");
-	GLuint program_id = glCreateProgram();
-	glAttachShader(program_id, VertexShaderID);
-	glAttachShader(program_id, FragmentShaderID);
+	program_id = glCreateProgram();
+	glAttachShader(program_id, vertex_shader_id);
+	glAttachShader(program_id, fragment_shader_id);
 	glLinkProgram(program_id);
-	// Check the program
-	glGetProgramiv(program_id, GL_LINK_STATUS, &Result);
-	glGetProgramiv(program_id, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if ( InfoLogLength > 0 ){
-		log = (GLchar*)malloc(InfoLogLength);
-		bzero(log, InfoLogLength);
-		if ( log == NULL )
-		{
-			fprintf(stderr,"Erreur d'allocation de mémoire pour le log de la compilation du shader\n");
-			return 0;
-		}
-		glGetShaderInfoLog(program_id, InfoLogLength, &InfoLogLength, log);
-		// On peut afficher le message
-		if (strlen(log))
-			fprintf(stderr,"Erreur de link:\n%s",log);
-		// Et on n'oublie pas de libéré la mémoire
-		free(log);
-	}
-	free(vertFileStr);
-	free(fragFileStr);
-	glDetachShader(program_id, VertexShaderID);
-	glDetachShader(program_id, FragmentShaderID);
-	glDeleteShader(VertexShaderID);
-	glDeleteShader(FragmentShaderID);
-	//pthread_mutex_unlock (&mutex_stock);
-
-	//Add to app list;
-	add_shader(name, program_id);
-
+	if (!shader_check_error(program_id))
+		printf("Probleme de link\n");
+	glDetachShader(program_id, vertex_shader_id);
+	glDetachShader(program_id, fragment_shader_id);
+	glDeleteShader(vertex_shader_id);
+	glDeleteShader(fragment_shader_id);
 	return (program_id);
 }

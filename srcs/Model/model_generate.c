@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 10:58:57 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 11:02:59 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 15:18:48 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	model_generate_uniform_view(t_app *app, t_model *model)
 	else
 		target = vec3f(.0f, .0f, .0f);
 	upvector = vec3f(0.0f, 1.0f, 0.0f);
-	view = mat4fLookAt(
+	view = mat4f_look_at(
 		app->input->pos,
 		target,
 		upvector);

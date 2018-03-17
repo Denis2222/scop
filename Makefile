@@ -22,6 +22,8 @@ LIBFT = ./libft/libft.a
 SRC = shader.c \
 	   Control/controls.c \
 	   Control/control_light.c \
+	   Control/control_options.c \
+	   Control/control_view.c \
 	   Model/model.c \
 	   Model/model_bind.c \
 	   Model/model_bind_buffer.c \
@@ -40,6 +42,7 @@ SRC = shader.c \
 	   Object/Parsing/face_346.c \
 	   Object/Parsing/tmp_obj.c \
 	   t_list.c \
+	   t_list2.c \
 	   Material/mtl.c \
 	   Material/bmp.c \
 	   Material/texture.c \

@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 07:30:15 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 13:08:42 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 13:21:44 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,93 +61,6 @@ t_input	*camera_init(void)
 	in->RatioColorTextureBool = 1;
 	in->RatioColorTexture = 1.0f;
 	return (in);
-}
-
-void	controls_direction(t_app *app)
-{
-	float	delta_time;
-	double	xpos;
-	double	ypos;
-
-	glfwGetCursorPos(app->window, &xpos, &ypos);
-	delta_time = (glfwGetTime() - app->input->lastTime);
-	light_controls(app);
-	app->input->lastTime = glfwGetTime();
-	glfwSetCursorPos(app->window, WIDTH / 2, HEIGHT / 2);
-	app->input->horizontalAngle += app->input->mouseSpeed * delta_time *
-	(float)(WIDTH / 2 - xpos);
-	app->input->verticalAngle += app->input->mouseSpeed * delta_time *
-	(float)(HEIGHT / 2 - ypos);
-	vec3fedit(app->input->dir, cos(app->input->verticalAngle) *
-	sin(app->input->horizontalAngle), sin(app->input->verticalAngle),
-	cos(app->input->verticalAngle) * cos(app->input->horizontalAngle));
-	vec3fedit(app->input->right, sin(app->input->horizontalAngle - 3.14f /
-	2.0f), 0, cos(app->input->horizontalAngle - 3.14f / 2.0f));
-	vec3fedit(app->input->deltaDir, app->input->dir->x * delta_time *
-	app->input->speed, app->input->dir->y * delta_time * app->input->speed,
-	app->input->dir->z * delta_time * app->input->speed);
-	vec3fedit(app->input->deltaRight, app->input->right->x * delta_time *
-	app->input->speed, app->input->right->y * delta_time * app->input->speed,
-	app->input->right->z * delta_time * app->input->speed);
-}
-
-void	control_view(t_app *app)
-{
-	if (glfwGetKey(app->window, GLFW_KEY_V) == GLFW_PRESS)
-	{
-		oldState = GLFW_PRESS;
-		if (glfwGetKey(app->window, GLFW_KEY_V) == GLFW_RELEASE &&
-			oldState == GLFW_PRESS)
-		{
-			if (app->input->view == 0)
-				app->input->view = 1;
-			else
-				app->input->view = 0;
-		}
-		oldState = glfwGetKey(app->window, GLFW_KEY_V);
-	}
-}
-
-void	control_render_mode(t_app *app)
-{
-	if (glfwGetKey(app->window, GLFW_KEY_M) == GLFW_PRESS)
-	{
-		oldState = GLFW_PRESS;
-		if (glfwGetKey(app->window, GLFW_KEY_M) == GLFW_RELEASE &&
-			oldState == GLFW_PRESS)
-		{
-			app->input->renderMode++;
-			app->input->renderMode = app->input->renderMode % 12;
-		}
-		oldState = glfwGetKey(app->window, GLFW_KEY_M);
-	}
-}
-
-void	control_color_texture(t_app *app)
-{
-	if (glfwGetKey(app->window, GLFW_KEY_T) == GLFW_PRESS)
-	{
-		oldState = GLFW_PRESS;
-		if (glfwGetKey(app->window, GLFW_KEY_T) == GLFW_RELEASE &&
-		oldState == GLFW_PRESS)
-		{
-			app->input->RatioColorTextureBool =
-				app->input->RatioColorTextureBool ? 0 : 1;
-		}
-	}
-}
-
-void	control_auto_rotate(t_app *app)
-{
-	if (glfwGetKey(app->window, GLFW_KEY_K) == GLFW_PRESS)
-	{
-		oldState = GLFW_PRESS;
-		if (glfwGetKey(app->window, GLFW_KEY_K) == GLFW_RELEASE &&
-			oldState == GLFW_PRESS)
-		{
-			app->input->autoRotate = app->input->autoRotate ? 0 : 1;
-		}
-	}
 }
 
 void	camera_controls(t_app *app)

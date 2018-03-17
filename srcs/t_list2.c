@@ -1,37 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_vec2f.c                                          :+:      :+:    :+:   */
+/*   t_list2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/17 15:07:51 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 15:19:13 by dmoureu-         ###   ########.fr       */
+/*   Created: 2018/03/17 13:29:13 by dmoureu-          #+#    #+#             */
+/*   Updated: 2018/03/17 13:30:00 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <glmc.h>
+#include <scop.h>
 
-t_vec2f	*vec2f(float x, float y)
+void	list_push(t_list **lst, t_list *to_add)
 {
-	t_vec2f	*n;
-
-	n = (t_vec2f*)malloc(sizeof(t_vec2f));
-	if (!n)
-		return (NULL);
-	n->x = x;
-	n->y = y;
-	return (n);
+	if (*lst)
+		return (list_push_back(*lst, to_add));
+	*lst = to_add;
 }
 
-t_vec2f	*vec2fedit(t_vec2f *this, float x, float y)
+void	list_push_back(t_list *l, t_list *to_add)
 {
-	this->x = x;
-	this->y = y;
-	return (this);
+	if (l->next)
+		return (list_push_back(l->next, to_add));
+	l->next = to_add;
 }
 
-void	vec2f_print(t_vec2f *t)
+void	list_del(t_list **l)
 {
-	printf("[x:%0.3f, y:%0.3f]\n", t->x, t->y);
+	if (*l)
+	{
+		list_del(&((*l)->next));
+		list_del_one(l);
+	}
+}
+
+void	list_del_one(t_list **l)
+{
+	free(*l);
+	*l = NULL;
 }

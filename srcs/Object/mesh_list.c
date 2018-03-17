@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 12:34:47 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 12:36:34 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 15:05:47 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ t_obj	*get_mesh(const char *path)
 		if (strcmp(path, obj->path) == 0)
 			return (obj);
 		l = l->next;
+	}
+	return (NULL);
+}
+
+void	*load_meshes(void *m)
+{
+	t_app	*app;
+	t_list	*models;
+	int		i;
+
+	app = (t_app*)m;
+	i = 0;
+	models = app->models;
+	while (models)
+	{
+		model_load(models->addr);
+		models = models->next;
+		i++;
 	}
 	return (NULL);
 }

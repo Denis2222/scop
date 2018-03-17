@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_mat4f.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/17 15:32:54 by dmoureu-          #+#    #+#             */
+/*   Updated: 2018/03/17 15:39:42 by dmoureu-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <glmc.h>
 
 t_mat4f	*mat4f(void)
@@ -11,7 +23,7 @@ t_mat4f	*mat4f(void)
 	if (!m)
 		return (NULL);
 	x = 0;
-	while(x < 4)
+	while (x < 4)
 	{
 		y = 0;
 		while (y < 4)
@@ -36,7 +48,7 @@ t_mat4f	*mat4f_identity(float t)
 	return (m);
 }
 
-t_mat4f *mat4f_scale(float x, float y, float z)
+t_mat4f	*mat4f_scale(float x, float y, float z)
 {
 	t_mat4f *scale;
 
@@ -50,20 +62,20 @@ t_mat4f *mat4f_scale(float x, float y, float z)
 t_mat4f	*mat4f_multiply(t_mat4f *s, t_mat4f *d)
 {
 	t_mat4f	*new;
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 
 	new = mat4f();
 	x = 0;
 	while (x < 4)
 	{
 		y = 0;
-		while ( y < 4)
+		while (y < 4)
 		{
 			new->m[x][y] = (s->m[x][0] * d->m[0][y]) +
-						   (s->m[x][1] * d->m[1][y]) +
-						   (s->m[x][2] * d->m[2][y]) +
-						   (s->m[x][3] * d->m[3][y]);
+						(s->m[x][1] * d->m[1][y]) +
+						(s->m[x][2] * d->m[2][y]) +
+						(s->m[x][3] * d->m[3][y]);
 			y++;
 		}
 		x++;
@@ -71,7 +83,7 @@ t_mat4f	*mat4f_multiply(t_mat4f *s, t_mat4f *d)
 	return (new);
 }
 
-t_mat4f *mat4f_rotate_x(t_mat4f *m, float angle)
+t_mat4f	*mat4f_rotate_x(t_mat4f *m, float angle)
 {
 	if (m == NULL)
 		m = mat4f_identity(1.0f);
@@ -82,7 +94,7 @@ t_mat4f *mat4f_rotate_x(t_mat4f *m, float angle)
 	return (m);
 }
 
-t_mat4f *mat4f_rotate_y(t_mat4f *m, float angle)
+t_mat4f	*mat4f_rotate_y(t_mat4f *m, float angle)
 {
 	if (m == NULL)
 		m = mat4f_identity(1.0f);
@@ -93,7 +105,7 @@ t_mat4f *mat4f_rotate_y(t_mat4f *m, float angle)
 	return (m);
 }
 
-t_mat4f *mat4f_rotate_z(t_mat4f *m, float angle)
+t_mat4f	*mat4f_rotate_z(t_mat4f *m, float angle)
 {
 	if (m == NULL)
 		m = mat4f_identity(1.0f);
@@ -104,7 +116,7 @@ t_mat4f *mat4f_rotate_z(t_mat4f *m, float angle)
 	return (m);
 }
 
-t_mat4f *mat4f_rotate(t_mat4f *m, float angle, t_vec3f *dir)
+t_mat4f	*mat4f_rotate(t_mat4f *m, float angle, t_vec3f *dir)
 {
 	t_mat4f	*dst;
 	t_mat4f *new;
@@ -126,11 +138,11 @@ t_mat4f *mat4f_rotate(t_mat4f *m, float angle, t_vec3f *dir)
 	return (dst);
 }
 
-t_vec4f  *mat4f_mul_vec4f(t_mat4f *m, t_vec4f *src)
+t_vec4f	*mat4f_mul_vec4f(t_mat4f *m, t_vec4f *src)
 {
 	t_vec4f	*dst;
 
-	dst = vec4f(0,0,0,0);
+	dst = vec4f(0, 0, 0, 0);
 	dst->x =
 	m->m[0][0] * src->x +
 	m->m[0][1] * src->y +
@@ -151,10 +163,10 @@ t_vec4f  *mat4f_mul_vec4f(t_mat4f *m, t_vec4f *src)
 	m->m[3][1] * src->y +
 	m->m[3][2] * src->z +
 	m->m[3][3] * src->w;
-    return (dst);
+	return (dst);
 }
 
-t_mat4f *mat4f_translate(t_vec3f *t)
+t_mat4f	*mat4f_translate(t_vec3f *t)
 {
 	t_mat4f *new;
 
@@ -165,13 +177,13 @@ t_mat4f *mat4f_translate(t_vec3f *t)
 	return (new);
 }
 
-void 	mat4f_print(t_mat4f *m)
+void	mat4f_print(t_mat4f *m)
 {
 	int y;
 
 	y = 0;
 	printf("_________________________________\n");
-	while ( y < 4)
+	while (y < 4)
 	{
 		printf("|%10.6f %10.6f %10.6f %10.6f|\n",
 		m->m[y][0],
@@ -184,7 +196,7 @@ void 	mat4f_print(t_mat4f *m)
 	return ;
 }
 
-t_mat4f *mat4fLookAt( t_vec3f *eye, t_vec3f *center, t_vec3f *up)
+t_mat4f	*mat4f_look_at( t_vec3f *eye, t_vec3f *center, t_vec3f *up)
 {
 	t_mat4f	*matrix;
 	t_vec3f	*f;
@@ -201,9 +213,9 @@ t_mat4f *mat4fLookAt( t_vec3f *eye, t_vec3f *center, t_vec3f *up)
 	matrix->m[0][1] = u->x;
 	matrix->m[1][1] = u->y;
 	matrix->m[2][1] = u->z;
-	matrix->m[0][2] =-f->x;
-	matrix->m[1][2] =-f->y;
-	matrix->m[2][2] =-f->z;
+	matrix->m[0][2] = -f->x;
+	matrix->m[1][2] = -f->y;
+	matrix->m[2][2] = -f->z;
 	matrix->m[3][0] = -vec3f_dot(s, eye);
 	matrix->m[3][1] = -vec3f_dot(u, eye);
 	matrix->m[3][2] = vec3f_dot(f, eye);
@@ -230,16 +242,16 @@ t_mat4f	*mat4f_perspective(float fov, float aspect_ratio, float near, float far)
 	return (m);
 }
 
-t_mat4f *mat4f_ortho(float top, float bottom, float left, float right, float near, float far)
+t_mat4f	*mat4f_ortho(float top, float bottom, float left, float right, float near, float far)
 {
 	t_mat4f *m;
 
 	m = mat4f_identity(1.0f);
 	m->m[0][0] = 2.0f / (right - left);
 	m->m[1][1] = 2.0f / (top - bottom);
-	m->m[2][2] = - 2.0f / (far - near);
-	m->m[3][0] = - (right + left) / (right - left);
-	m->m[3][1] = - (top + bottom) / (top - bottom);
-	m->m[3][2] = - (far + near) / (far - near);
+	m->m[2][2] = -2.0f / (far - near);
+	m->m[3][0] = -(right + left) / (right - left);
+	m->m[3][1] = -(top + bottom) / (top - bottom);
+	m->m[3][2] = -(far + near) / (far - near);
 	return (m);
 }

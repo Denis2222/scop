@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_vec4f.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/17 15:23:13 by dmoureu-          #+#    #+#             */
+/*   Updated: 2018/03/17 15:24:12 by dmoureu-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <glmc.h>
 
 t_vec4f	*vec4f(float x, float y, float z, float w)
@@ -38,10 +50,15 @@ t_vec4f	*vec4f_norm(t_vec4f *v)
 
 t_vec4f	*vec4f_cross(t_vec4f *s, t_vec4f *d)
 {
-	float nx = s->y * d->z - s->z * d->y;
-	float ny = s->z * d->x - s->x * d->z;
-	float nz = s->x * d->y - s->y * d->x;
-	float nw = s->w * d->w - s->w * d->w;
+	float nx;
+	float ny;
+	float nz;
+	float nw;
+
+	nx = s->y * d->z - s->z * d->y;
+	ny = s->z * d->x - s->x * d->z;
+	nz = s->x * d->y - s->y * d->x;
+	nw = s->w * d->w - s->w * d->w;
 	return (vec4f(nx, ny, nz, nw));
 }
 
