@@ -44,15 +44,15 @@ void	control_view(t_app *app)
 {
 	if (glfwGetKey(app->window, GLFW_KEY_V) == GLFW_PRESS)
 	{
-		oldState = GLFW_PRESS;
+		g_oldstate = GLFW_PRESS;
 		if (glfwGetKey(app->window, GLFW_KEY_V) == GLFW_RELEASE &&
-			oldState == GLFW_PRESS)
+			g_oldstate == GLFW_PRESS)
 		{
 			if (app->input->view == 0)
 				app->input->view = 1;
 			else
 				app->input->view = 0;
 		}
-		oldState = glfwGetKey(app->window, GLFW_KEY_V);
+		g_oldstate = glfwGetKey(app->window, GLFW_KEY_V);
 	}
 }

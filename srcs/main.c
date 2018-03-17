@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 14:41:19 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 15:06:28 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 16:24:23 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ int		main(int argc, char **argv)
 	}
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
+	main_load(app);
+	main_bind(app);
 	main_render(app);
 	main_clean(app);
 	glDeleteVertexArrays(1, &vao);

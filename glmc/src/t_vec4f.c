@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 15:23:13 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 15:24:12 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 16:21:37 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ t_vec4f	*vec4f(float x, float y, float z, float w)
 	n->z = z;
 	n->w = w;
 	return (n);
-}
-
-float	vec4f_sqrt(t_vec4f *v)
-{
-	return (v->x * v->x + v->y * v->y + v->z * v->z + v->w * v->w);
-}
-
-float	vec4f_dot(t_vec4f *s, t_vec4f *d)
-{
-	return (s->x * d->x + s->y * d->y + s->z * d->z + s->w * d->w);
 }
 
 t_vec4f	*vec4f_norm(t_vec4f *v)
@@ -62,6 +52,7 @@ t_vec4f	*vec4f_cross(t_vec4f *s, t_vec4f *d)
 	return (vec4f(nx, ny, nz, nw));
 }
 
-void vec4f_print(t_vec4f *t) {
+void	vec4f_print(t_vec4f *t)
+{
 	printf("[x:%0.1f, y:%0.1f, z:%0.1f, w:%0.1f]\n", t->x, t->y, t->z, t->w);
 }

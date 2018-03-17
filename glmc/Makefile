@@ -1,7 +1,12 @@
 SRCS = src/t_vec2f.c \
 	   src/t_vec3f.c \
+	   src/t_vec3f2.c \
+	   src/t_vec3f3.c \
 	   src/t_vec4f.c \
-	   src/t_mat4f.c
+	   src/t_vec4f2.c \
+	   src/t_mat4f.c \
+	   src/t_mat4f2.c \
+	   src/t_mat4f3.c
 
 
 LIBA = libglmc.a

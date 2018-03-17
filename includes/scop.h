@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 15:25:14 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 15:35:50 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/17 16:17:40 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-t_list	*list_new(void *addr, size_t size);
-t_list	*list_new_uint(unsigned int u, size_t size);
-int		list_length(t_list *list);
-void	list_push(t_list **lst, t_list *to_add);
-void	list_push_back(t_list *l, t_list *to_add);
+t_list				*list_new(void *addr, size_t size);
+t_list				*list_new_uint(unsigned int u, size_t size);
+int					list_length(t_list *list);
+void				list_push(t_list **lst, t_list *to_add);
+void				list_push_back(t_list *l, t_list *to_add);
 
-void	*list_get(t_list *l, size_t n);
+void				*list_get(t_list *l, size_t n);
 
-void	list_del(t_list **l);
-void	list_del_one(t_list **l);
+void				list_del(t_list **l);
+void				list_del_one(t_list **l);
 
 typedef struct		s_app
 {
@@ -74,7 +74,7 @@ typedef struct		s_app
 	t_argvise		*args;
 }					t_app;
 
-typedef struct 		s_texture
+typedef struct		s_texture
 {
 	char			*path;
 	int				loaded;
@@ -84,11 +84,11 @@ typedef struct 		s_texture
 	GLuint			textureID;
 }					t_texture;
 
-typedef struct 		s_shader
+typedef struct		s_shader
 {
 	char			*path;
 	int				loaded;
-	GLuvoid			program_id;
+	GLuint			program_id;
 }					t_shader;
 
 typedef struct		s_mtl
@@ -125,11 +125,11 @@ typedef struct		s_obj
 	size_t			nvertices;
 	float			*uvs;
 	size_t			nuvs;
-	float 			*normals;
+	float			*normals;
 	size_t			nnormals;
 
 	float			*tangents;
-	float 			*bitangents;
+	float			*bitangents;
 
 	float			*colors;
 }					t_obj;
@@ -153,11 +153,11 @@ typedef struct		s_tmp_obj
 	t_list			*uvIndices;
 	t_list			*normalIndices;
 
-	void			facefound;
-	char 			lineHeader[1024];
-	char 			stupidBuffer[1000];
+	int				facefound;
+	char			lineHeader[1024];
+	char			stupidBuffer[1000];
 
-	void			matches;
+	int				matches;
 
 	unsigned int	vertexIndex[4];
 	unsigned int	uvIndex[4];
@@ -269,7 +269,7 @@ typedef struct		s_model
 t_app				*root(void);
 
 int					init_glfw(t_app *app);
-GLuvoid				shader_load(const char *name);
+GLuint				shader_load(const char *name);
 
 t_input				*camera_init(void);
 void				camera_free(t_input *input);
@@ -289,69 +289,71 @@ int					model_bind(t_model *model);
 void				model_bind_buffer(GLuint *buffer, size_t s, float *data);
 void				model_bind_texture(GLuint *textureID, char *path);
 int					model_bind_shader(t_model *model, char *name);
-void		model_bind_buffer_all(t_model *model);
+void				model_bind_buffer_all(t_model *model);
 
-void		model_render(t_app *app, t_model *model);
+int					model_render(t_app *app, t_model *model);
 
-void		model_generate_uniform_model(t_model *model);
-void		model_generate_uniform_projection(t_app *app, t_model *model);
-void		model_generate_uniform_view(t_app *app, t_model *model);
+void				model_generate_uniform_model(t_model *model);
+void				model_generate_uniform_projection(t_app *app,
+						t_model *model);
+void				model_generate_uniform_view(t_app *app, t_model *model);
 
-void		model_send_buffer(unsigned int attr, GLuint *buffer, size_t size);
-void		model_send_texture(unsigned int i, GLuint Texture,
-					GLuint TextureID);
-void		model_send_mvp(t_app *app, t_model *model);
+void				model_send_buffer(unsigned int attr, GLuint *buffer,
+						size_t size);
+void				model_send_texture(unsigned int i, GLuint Texture,
+						GLuint TextureID);
+void				model_send_mvp(t_app *app, t_model *model);
 
-void		model_control(t_app *app, t_model *model);
-void		model_free(t_model *model);
+void				model_control(t_app *app, t_model *model);
+void				model_free(t_model *model);
 
-void		model_load_obj(t_model *model, const char *path);
+int					model_load_obj(t_model *model, const char *path);
 
-t_mtl 		*new_mtl(char *path, t_tmp_obj *t);
+t_mtl				*new_mtl(char *path, t_tmp_obj *t);
 
-char 		*load_texture(char *path, t_tmp_obj *t);
+char				*load_texture(char *path, t_tmp_obj *t);
 
-void		compute_tangent(t_obj *o);
-void		parse_face_3_4(FILE *file, t_tmp_obj *t);
-void		parse_face_6(t_tmp_obj *t);
-void		parse_face_8(t_tmp_obj *t);
-void		parse_face_8_6(FILE *file, t_tmp_obj *t);
-void		parse_face_9(t_tmp_obj *t);
-void		parse_face_12(t_tmp_obj *t);
-int			parse_face(FILE *file, t_tmp_obj *t);
+void				compute_tangent(t_obj *o);
+void				parse_face_3_4(FILE *file, t_tmp_obj *t);
+void				parse_face_6(t_tmp_obj *t);
+void				parse_face_8(t_tmp_obj *t);
+void				parse_face_8_6(FILE *file, t_tmp_obj *t);
+void				parse_face_9(t_tmp_obj *t);
+void				parse_face_12(t_tmp_obj *t);
+int					parse_face(FILE *file, t_tmp_obj *t);
 
-void		parse_v(FILE *file, t_tmp_obj *t);
-void		parse_vt(FILE *file, t_tmp_obj *t);
-void		parse_vn(FILE *file, t_tmp_obj *t);
-void		parse_mtl(FILE *file, t_tmp_obj *t);
+void				parse_v(FILE *file, t_tmp_obj *t);
+void				parse_vt(FILE *file, t_tmp_obj *t);
+void				parse_vn(FILE *file, t_tmp_obj *t);
+void				parse_mtl(FILE *file, t_tmp_obj *t);
 
-int			tmp_obj_init(t_tmp_obj *t, const char *path);
-int			tmp_obj_loading(t_tmp_obj *t);
-void		tmp_obj_free(t_tmp_obj *t);
+int					tmp_obj_init(t_tmp_obj *t, const char *path);
+int					tmp_obj_loading(t_tmp_obj *t);
+void				tmp_obj_free(t_tmp_obj *t);
 
-char 		*ft_dirname(const char *filepath);
+char				*ft_dirname(const char *filepath);
 
-FILE		*open_file_from_folder(const char *folder, char *path);
+FILE				*open_file_from_folder(const char *folder, char *path);
 
-int			load_bmp(const char * imagepath);
+int					load_bmp(const char *imagepath);
 
-void		centerobj(t_obj *obj);
-void		obj_init(t_obj *obj_data, t_tmp_obj *t);
-void		obj_init_color(t_obj *obj_data);
-t_obj		*secure_malloc_obj(void);
+void				centerobj(t_obj *obj);
+void				obj_init(t_obj *obj_data, t_tmp_obj *t);
+void				obj_init_color(t_obj *obj_data);
+t_obj				*secure_malloc_obj(void);
 
-void		add_mesh(t_obj *obj, const char *path);
-t_obj		*get_mesh(const char *path);
+void				add_mesh(t_obj *obj, const char *path);
+t_obj				*get_mesh(const char *path);
 
-void		light_controls(t_app *app);
-void		controls_direction(t_app *app);
-void		control_render_mode(t_app *app);
-void		control_color_texture(t_app *app);
-void		control_auto_rotate(t_app *app);
-void		control_view(t_app *app);
+void				light_controls(t_app *app);
+void				controls_direction(t_app *app);
+void				control_render_mode(t_app *app);
+void				control_color_texture(t_app *app);
+void				control_auto_rotate(t_app *app);
+void				control_view(t_app *app);
 
-void		*load_meshes(void *m);
+void				*load_meshes(void *m);
 
-static void	oldState;
+static int			g_oldstate;
 
 #endif
