@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 11:03:54 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 17:33:20 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/18 22:21:09 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	model_bind_uniform(t_model *model)
 	model->matrix_view_id = glGetUniformLocation(model->program_id, "V");
 	model->matrix_projection_id = glGetUniformLocation(model->program_id, "P");
 	model->diffuse_texture_id = glGetUniformLocation(model->program_id,
-		"diffuse_textureSampler");
+		"DiffuseTextureSampler");
 	model->normal_texture_id = glGetUniformLocation(model->program_id,
-		"normal_textureSampler");
+		"NormalTextureSampler");
 	model->specular_texture_id = glGetUniformLocation(model->program_id,
-		"specular_textureSampler");
+		"SpecularTextureSampler");
 	model->model_scale_id = glGetUniformLocation(model->program_id,
 		"ModelScale");
 	model->model_rotate_id = glGetUniformLocation(model->program_id,
@@ -31,7 +31,7 @@ void	model_bind_uniform(t_model *model)
 	model->light_id = glGetUniformLocation(model->program_id,
 		"LightPosition_worldspace");
 	model->ratio_colortexture_id = glGetUniformLocation(model->program_id,
-		"ratio_color_texture");
+		"RatioColorTexture");
 }
 
 void	model_bind_texture_to_uniform(t_model *model, t_obj *obj)
