@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:58:47 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 11:34:57 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/18 23:32:21 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		checkobj(FILE *file)
 		}
 		i++;
 	}
+	fseek(file, 0, SEEK_SET);
 	return (1);
 }
 

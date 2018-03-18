@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 03:58:47 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 17:11:01 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/18 23:49:41 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	load_all_in_obj_normal(t_obj *obj_data, t_tmp_obj *t)
 		if (t->normal_i < 1)
 			t->normal_i = list_length(t->temp_normal) + t->normal_i + 1;
 		t->normal = list_get(t->temp_normal, t->normal_i - 1);
+		if (t->normal == NULL)
+			return ;
 		obj_data->normals[t->n * 3 + 0] = t->normal->x;
 		obj_data->normals[t->n * 3 + 1] = t->normal->y;
 		obj_data->normals[t->n * 3 + 2] = t->normal->z;
@@ -32,6 +34,11 @@ void	load_all_in_obj(t_obj *obj_data, t_tmp_obj *t)
 	if (t->vertex_i < 1)
 		t->vertex_i = list_length(t->temp_vertex) + t->vertex_i + 1;
 	t->vertex = list_get(t->temp_vertex, t->vertex_i - 1);
+	if (t->vertex == NULL)
+	{
+		printf(" Parsing error: miss v : Deprecated mode \n");
+		return ;
+	}
 	obj_data->vertices[t->n * 3 + 0] = t->vertex->x;
 	obj_data->vertices[t->n * 3 + 1] = t->vertex->y;
 	obj_data->vertices[t->n * 3 + 2] = t->vertex->z;
@@ -41,6 +48,8 @@ void	load_all_in_obj(t_obj *obj_data, t_tmp_obj *t)
 		if (t->uv_i < 1)
 			t->uv_i = list_length(t->temp_uv) + t->uv_i + 1;
 		t->uv = list_get(t->temp_uv, t->uv_i - 1);
+		if (t->uv == NULL)
+			return ;
 		obj_data->uvs[t->n * 2 + 0] = t->uv->x;
 		obj_data->uvs[t->n * 2 + 1] = t->uv->y;
 	}

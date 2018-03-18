@@ -6,7 +6,7 @@
 /*   By: dmoureu- <dmoureu-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 13:27:16 by dmoureu-          #+#    #+#             */
-/*   Updated: 2018/03/17 13:29:57 by dmoureu-         ###   ########.fr       */
+/*   Updated: 2018/03/18 23:48:50 by dmoureu-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void	*list_get(t_list *l, size_t n)
 		list = list->next;
 		i++;
 	}
+	printf(" Parsing error: Deprecated mode \n");
 	return (NULL);
 }
