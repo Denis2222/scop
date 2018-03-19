@@ -84,7 +84,6 @@ void		get_path_for_texture(char *folder, char **path)
 			printf("Impossible to open texture file : %s !\n", filepath);
 			return ;
 		}
-		fclose(file);
 	}
 	fclose(file);
 	return ;

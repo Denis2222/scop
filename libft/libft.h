@@ -19,7 +19,7 @@
 # include "argvise.h"
 
 int					ft_abs(int n);
-intmax_t			ft_atoi(const char *str);
+size_t				ft_atoi(const char *str);
 size_t				ft_strlen(const char *str);
 int					ft_strcmp(char *s1, const char *s2);
 int					ft_strncmp(char *s1, const char *s2, size_t n);
