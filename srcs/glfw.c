@@ -16,7 +16,7 @@ void	init_glfw_norme(t_app *app)
 {
 	app->width = WIDTH;
 	app->height = HEIGHT;
-	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_SAMPLES, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_VERSION_MAJOR);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_VERSION_MINOR);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -29,7 +29,6 @@ void	init_glfw_norme2(t_app *app)
 	glfwSetInputMode(app->window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetInputMode(app->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 	glDepthFunc(GL_LESS);
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 }

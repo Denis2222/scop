@@ -25,7 +25,7 @@
 #  include <GL/glew.h>
 #  include <GLFW/glfw3.h>
 #  define OPENGL_VERSION_MAJOR 4
-#  define OPENGL_VERSION_MINOR 0
+#  define OPENGL_VERSION_MINOR 3
 # endif
 
 # include <stdio.h>
@@ -33,12 +33,10 @@
 # include <stdlib.h>
 # include <time.h>
 # include <string.h>
-# include <libgen.h>
-# include <pthread.h>
 # include <glmc.h>
 # include <libft.h>
-# define WIDTH 2000
-# define HEIGHT 1000
+# define WIDTH 800
+# define HEIGHT 400
 # define TITLE "Scop = [] => * "
 # define BASE_FOV 45.0f
 
